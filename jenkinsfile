@@ -1,29 +1,56 @@
-node {
-    
-    stage('git clone') { 
-        git branch: 'main', credentialsId: 'git', url: 'https://github.com/namastemama/ks.git'
-    }
-    stage('maven clean') { 
-        sh 'mvn clean'
-    }
-    stage('validate') {
-        sh 'mvn validate'
+pipeline {
+    agent any
+
+    tools {
         
+        maven "Maven 3.0.5"
     }
-    stage('compile') {
-        sh 'mvn compile'
-        
-    }
-    stage('test') {
-        sh 'mvn test'
-        
-    }
-    stage('package') {
-        sh 'mvn package'
-        
-    }
-    stage('deployment') {
-        sh 'mvn deploy'
-        
+
+    stages {
+
+        stage('git clone') {
+            steps {
+            git branch: 'main', credentialsId: 'git', url: 'https://github.com/namastemama/ks.git'
+                
+            }
+        stage('maven version') {
+            steps {
+            sh 'mvn --version'
+                
+            }
+        stage('maven clean') {
+            steps {
+            sh 'mvn clean'
+                
+            }
+        stage('validate') {
+            steps {
+            sh 'mvn validate'
+                
+            }
+        stage('compile') {
+            steps {
+            sh 'mvn compile'
+                
+            }
+        stage('test') {
+            steps {
+            sh 'mvn test'
+                
+            }
+        stage('package') {
+            steps {
+            sh 'mvn package'
+                
+            }
+        stage('deploy') {
+            steps {
+            sh 'mvn deploy'
+                
+            }
+
+
+            
+        }
     }
 }
