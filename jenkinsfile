@@ -15,6 +15,7 @@ pipeline {
                 
             }    
         }
+
         stage('maven version') {
             steps {
             sh 'mvn --version'
@@ -26,7 +27,20 @@ pipeline {
             sh 'mvn clean'
                 
             }    
+
         }
+        stage('sonarqube scan'){
+            steps {
+            mvn sonar:sonar \
+              -Dsonar.projectKey=ksproject \
+              -Dsonar.host.url=http://34.125.76.60:9000 \
+              -Dsonar.login=ad287cca249518e3c175e07a2cf8e612f7771b50
+            }
+
+        }
+
+
+
         stage('validate') {
             steps {
             sh 'mvn validate'
