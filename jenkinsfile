@@ -2,8 +2,9 @@ pipeline {
     agent any
 
     tools {
+        maven 'Maven-3.0.5'
+    
         
-        maven 'maven'
     }
 
     stages {
@@ -12,52 +13,53 @@ pipeline {
             steps {
             git branch: 'main', credentialsId: 'git', url: 'https://github.com/namastemama/ks.git'
                 
-            }
+            }    
         }
         stage('maven version') {
             steps {
             sh 'mvn --version'
                 
-            }
+            }    
         }
-        stage('maven clean') {
+        stage('mvn clean') {
             steps {
             sh 'mvn clean'
                 
-            }
+            }    
         }
         stage('validate') {
             steps {
             sh 'mvn validate'
                 
-            }
+            }    
         }
         stage('compile') {
             steps {
             sh 'mvn compile'
                 
-            }
+            }    
         }
         stage('test') {
             steps {
             sh 'mvn test'
                 
-            }
+            }    
         }
         stage('package') {
             steps {
             sh 'mvn package'
                 
-            }
+            }    
         }
         stage('deploy') {
             steps {
             sh 'mvn deploy'
                 
-            }
-
-
-            
+            }    
         }
+
+
+
+
     }
 }
